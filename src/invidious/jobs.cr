@@ -1,6 +1,6 @@
 module Invidious::Jobs
   JOBS      = [] of BaseJob
-  SEMAPHORE = ::Channel(Nil).new(5)
+  SEMAPHORE = ::Channel(Nil).new(5) # Max 5 jobs running at once
 
   # Automatically generate a structure that wraps the various
   # jobs' configs, so that the following YAML config can be used:
@@ -41,7 +41,6 @@ module Invidious::Jobs
           job.begin
         rescue ex
           Log.error { "Job failed: #{ex.message}" }
-          # Handle specific exceptions or perform cleanup if necessary
         ensure
           SEMAPHORE.receive # Release the "slot"
         end
