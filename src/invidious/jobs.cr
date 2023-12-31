@@ -1,5 +1,5 @@
 module Invidious::Jobs
-  JOBS = [] of BaseJob
+  JOBS      = [] of BaseJob
   SEMAPHORE = ::Channel(Nil).new(5)
 
   # Automatically generate a structure that wraps the various
